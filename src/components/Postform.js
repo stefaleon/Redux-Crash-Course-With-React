@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-
+import { connect } from 'react-redux';
+import { createPost } from '../actions/postActions';
 
 class Postform extends Component {
     constructor(props) {
@@ -25,19 +25,9 @@ class Postform extends Component {
             title: this.state.title,
             body: this.state.body
         }
-        
-        var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-            targetUrl = 'https://jsonplaceholder.typicode.com/posts'
 
-        fetch(proxyUrl + targetUrl, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        })
-        .then(res => res.json())
-        .then(data => console.log(data));
+        // call action
+        this.props.createPost(post);
 
     }
 
@@ -67,4 +57,5 @@ class Postform extends Component {
     }
 }
 
-export default Postform;
+
+export default connect(null, { createPost })(Postform);
